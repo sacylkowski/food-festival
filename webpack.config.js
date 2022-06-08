@@ -17,6 +17,33 @@ module.exports = {
         path: __dirname + "/dist",
         filename: "[name].bundle.js"
     },
+    module: {
+        rules: [
+            // adding an object to the rules array.  This will identify the type of files to pre-process using the test property to find a regex
+            {
+                test: /\.jpg$/i,
+                use: [
+                    {
+                        loader: "file-loader",
+                        // the default behavior of file-loader is that a file will be treated as an ES5 module
+                        // paths to images might be formatted incorrectly, so we pass esModule: false to prevent this
+                        options: {
+                            esModule: false,
+                            name (file) {
+                                return "[path][name].[ext]"
+                            },
+                            publicPath: function(url) {
+                                return url.replace("../", "/assets/")
+                            }
+                        }
+                    },
+                    {
+                        loader: "image-webpack-loader"
+                    }
+                ]
+            }
+        ]
+    },
     // need to tell webpack to use the jQuery plugin
     plugins: [
         new webpack.ProvidePlugin({
