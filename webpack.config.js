@@ -1,11 +1,11 @@
 // a blueprint file for the way webpack should behave within our project
-const BundleAnalyzerPlugin = require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
-const path = require("path");
+const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
 const webpack = require("webpack");
+const path = require("path");
 
 // the main configuration object - add options within this object that tell webpack what to do
 
-module.exports = {
+const config = {
     entry: {
         app: "./assets/js/script.js",
         events: "./assets/js/events.js",
@@ -14,7 +14,7 @@ module.exports = {
     },
     output: {
         // filename is using the key from the entry points
-        path: __dirname + "/dist",
+        path: path.join(__dirname + "/dist"),
         filename: "[name].bundle.js"
     },
     module: {
@@ -56,3 +56,5 @@ module.exports = {
     ],
     mode: "development"
 };
+
+module.exports = config;
